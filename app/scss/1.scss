@@ -1,5 +1,14 @@
 .main {
-	&.sub-main {
-		padding: 0;
-	}
+  &.sub-main {
+    padding: 0;
+  }
+
+  &.toto {
+    color: red;
+    background: none;
+  }
+}
+
+.test {
+  color: pink;
 }

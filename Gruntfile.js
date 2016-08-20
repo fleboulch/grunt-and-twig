@@ -22,13 +22,13 @@ module.exports = function(grunt) {
             test: {
                 files: [
                     // includes files within path
-                    //{expand: true, src: ['app/src/*'], dest: 'app/dist/', filter: 'isFile'},
+                    //{expand: true, src: ['app/src/*'], dest: 'dist/', filter: 'isFile'},
 
                     // includes files within path and its sub-directories
-                    //{expand: true, src: ['app/src'], dest: 'app/dist/'},
+                    //{expand: true, src: ['app/src'], dest: 'dist/'},
 
                     // makes all src relative to cwd
-                    {expand: true, cwd: '<%= appName %>scss/', src: ['**'], dest: '<%= appName %>dist/scss/'},
+                    {expand: true, cwd: '<%= appName %>scss/', src: ['**'], dest: 'dist/scss/'},
 
                     // flattens results to a single level
                     //{expand: true, flatten: true, src: ['path/**'], dest: 'dist/', filter: 'isFile'},
@@ -36,18 +36,23 @@ module.exports = function(grunt) {
             },
             html: {
                 files: [
-                    {expand: true, cwd: '<%= appName %>', src: ['*.html'], dest: '<%= appName %>dist/'},
+                    {expand: true, cwd: '<%= appName %>', src: ['*.html'], dest: 'dist/'},
+                ],
+            },
+            css: {
+                files: [
+                    {expand: true, cwd: '.tmp/css/', src: ['styles.css'], dest: 'dist/css/'},
                 ],
             }
         },
         clean: {
-            folder: ["<%= appName %>dist/", ".tmp/"]
+            folder: ["dist/", ".tmp/"]
         },
         compass: {                  // Task
             dist: {
                 options: {
                     sassDir: '<%= appName %>scss/',
-                    cssDir: '<%= appName %>dist/css/'
+                    cssDir: '.tmp/css/'
                 }
             }
         },
@@ -55,7 +60,7 @@ module.exports = function(grunt) {
             options: {
                 port: 9001, // configure your port here
                 hostname: 'localhost',
-                //base: '<%= appName %>dist', // configure your site distribution path here
+                //base: 'dist', // configure your site distribution path here
                 //open: true,
                 //keepalive: true,
                 livereload: 35729
@@ -63,11 +68,11 @@ module.exports = function(grunt) {
             livereload: {
                 options: {
                     open: true,
-                    base: '<%= appName %>dist/',
+                    base: 'dist/',
                     middleware: function (connect) {
                         return [
-                            serveStatic('app/dist')
-                            //connect.static('app/dist')
+                            serveStatic('dist')
+                            //connect.static('dist')
                         ];
                     }
                 }
@@ -75,7 +80,7 @@ module.exports = function(grunt) {
             dist: {
                 options: {
                     open: true,
-                    base: 'app/dist'
+                    base: 'dist'
                 }
             }
         },
@@ -89,13 +94,19 @@ module.exports = function(grunt) {
                 //livereload: '<%= connect.options.livereload %>'
                 //}
             },
+            compass: {
+                files: [
+                    '<%= appName %>/scss/*',
+                ],
+                tasks: ['compass', 'copy:css']
+            },
             livereload: {
                 options: {
                     livereload: '<%= connect.options.livereload %>'
                 },
                 files: [
-                    'app/dist/index.html'
-
+                    'dist/index.html',
+                    'dist/css/*'
                 ]
             }
         }
@@ -109,12 +120,19 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['uglify']);
 
     // custom task(s)
-
     grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
 
         grunt.task.run([
+            'build',
             'connect:livereload',
             'watch'
         ]);
     });
+
+    grunt.registerTask('build', [
+        'clean',
+        'compass',
+        'copy:html',
+        'copy:css'
+    ]);
 };
