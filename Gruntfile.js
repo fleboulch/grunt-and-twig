@@ -18,6 +18,16 @@ module.exports = function(grunt) {
                 dest: 'build/<%= pkg.name %>.min.js'
             }
         },
+        php: {
+            dist: {
+                options: {
+                    port: 9001,
+                    //keepalive: true,
+                    open: true,
+                    base: 'dist'
+                }
+            }
+        },
         copy: {
             test: {
                 files: [
@@ -37,6 +47,11 @@ module.exports = function(grunt) {
             html: {
                 files: [
                     {expand: true, cwd: '<%= appName %>', src: ['*.html'], dest: 'dist/'},
+                ],
+            },
+            php: {
+                files: [
+                    {expand: true, cwd: '<%= appName %>', src: ['*.php'], dest: 'dist/'},
                 ],
             },
             css: {
@@ -94,6 +109,12 @@ module.exports = function(grunt) {
                 //livereload: '<%= connect.options.livereload %>'
                 //}
             },
+            php: {
+                files: [
+                    '<%= appName %>index.php',
+                ],
+                tasks: ['copy:php']
+            },
             compass: {
                 files: [
                     '<%= appName %>/scss/*',
@@ -102,11 +123,13 @@ module.exports = function(grunt) {
             },
             livereload: {
                 options: {
-                    livereload: '<%= connect.options.livereload %>'
+                    //livereload: '<%= connect.options.livereload %>'
+                    livereload: true
                 },
                 files: [
                     'dist/index.html',
-                    'dist/css/*'
+                    'dist/css/*',
+                    'dist/index.php'
                 ]
             }
         }
@@ -122,9 +145,17 @@ module.exports = function(grunt) {
     // custom task(s)
     grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
 
+        if (target === 'html') {
+            return grunt.task.run([
+                'build',
+                'connect:livereload',
+                'watch'
+            ]);
+        }
+
         grunt.task.run([
             'build',
-            'connect:livereload',
+            'php',
             'watch'
         ]);
     });
@@ -133,6 +164,8 @@ module.exports = function(grunt) {
         'clean',
         'compass',
         'copy:html',
+        'copy:php',
         'copy:css'
     ]);
+
 };
