@@ -1,18 +1,11 @@
-<html>
+<?php
 
-<head>
-    <link rel="stylesheet" href="css/styles.css">
+require_once(__DIR__."/../vendor/autoload.php");
 
-</head>
-<body>
+$loader = new \Twig_Loader_Filesystem(__DIR__.'\views');
+$twig = new \Twig_Environment($loader);
 
-
-    <p class="test">Hello World</p>
-    <?php
-        echo "love php<br />";
-    ?>
-
-    <script src="//localhost:35729/livereload.js"></script>
-</body>
-
-</html>
+echo $twig->render('base.html.twig', [
+    'name' => 'florent',
+    'name2' => 'tony'
+]);

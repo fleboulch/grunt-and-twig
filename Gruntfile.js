@@ -49,6 +49,11 @@ module.exports = function(grunt) {
                     {expand: true, cwd: '<%= appName %>', src: ['*.html'], dest: 'dist/'},
                 ],
             },
+            twig: {
+                files: [
+                    {expand: true, cwd: '<%= appName %>', src: ['views/**/*.html.twig'], dest: 'dist/'},
+                ],
+            },
             php: {
                 files: [
                     {expand: true, cwd: '<%= appName %>', src: ['*.php'], dest: 'dist/'},
@@ -109,6 +114,16 @@ module.exports = function(grunt) {
                 //livereload: '<%= connect.options.livereload %>'
                 //}
             },
+            twig: {
+                files: [
+                    '<%= appName %>views/{,*/}*.html.twig',
+                ],
+                tasks: ['copy:twig'],
+                options: {
+                    spawn: false,
+                    livereload: true
+                }
+            },
             php: {
                 files: [
                     '<%= appName %>index.php',
@@ -165,7 +180,8 @@ module.exports = function(grunt) {
         'compass',
         'copy:html',
         'copy:php',
-        'copy:css'
+        'copy:css',
+        'copy:twig'
     ]);
 
 };
