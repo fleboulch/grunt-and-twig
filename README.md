@@ -7,7 +7,7 @@ curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
 sudo apt-get install -y nodejs
 ```
  
-Check if Node is correctly installed:
+Check if Node and npm are correctly installed:
 ```bash
 node -v  
 npm -v
@@ -23,6 +23,13 @@ sudo npm install npm -g
 sudo apt-get install ruby-full
 sudo gem install sass -v 3.4.9
 sudo gem install compass
+```
+
+Check if they are correctly installed:
+```bash
+ruby -v
+sass -v
+compass version
 ```
 
 ### Get php & Composer
@@ -43,12 +50,22 @@ php -r "unlink('composer-setup.php');"
 mv composer.phar /usr/local/bin/composer
 ```
 
+Check if Composer is correctly installed:
+```bash
+composer --version
+```
+
 # Grunt installation
 ```bash
 sudo npm install grunt-cli -g
+
+# check if grunt-cli is correctly installed
+grunt --version
 ```
 
 # In the project
+
+*Once you have downloaded the sources from github, go to the root folder*
 
 ### First run
 ```bash
