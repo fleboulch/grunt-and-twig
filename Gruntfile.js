@@ -59,6 +59,11 @@ module.exports = function(grunt) {
                     {expand: true, cwd: '<%= appName %>', src: ['*.php'], dest: 'dist/'},
                 ],
             },
+            translations: {
+                files: [
+                    {expand: true, cwd: '<%= appName %>', src: ['translations/*.yml'], dest: 'dist/'},
+                ],
+            },
             css: {
                 files: [
                     {expand: true, cwd: '.tmp/css/', src: ['styles.css'], dest: 'dist/css/'},
@@ -130,6 +135,12 @@ module.exports = function(grunt) {
                 ],
                 tasks: ['copy:php']
             },
+            translations: {
+                files: [
+                    '<%= appName %>translations/*.yml',
+                ],
+                tasks: ['copy:translations']
+            },
             compass: {
                 files: [
                     '<%= appName %>/scss/*',
@@ -144,7 +155,8 @@ module.exports = function(grunt) {
                 files: [
                     'dist/index.html',
                     'dist/css/*',
-                    'dist/index.php'
+                    'dist/index.php',
+                    'dist/translations/*'
                 ]
             }
         }
@@ -181,6 +193,7 @@ module.exports = function(grunt) {
         'copy:html',
         'copy:php',
         'copy:css',
+        'copy:translations',
         'copy:twig'
     ]);
 
