@@ -9,6 +9,10 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         appName: 'app/',
+        appTrans: 'translations/*.yml',
+        appSass: 'scss/',
+        pathToDist: 'dist/',
+        pathToTemp: '.tmp/',
         uglify: {
             options: {
                 banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
@@ -32,52 +36,52 @@ module.exports = function(grunt) {
             test: {
                 files: [
                     // includes files within path
-                    //{expand: true, src: ['app/src/*'], dest: 'dist/', filter: 'isFile'},
+                    //{expand: true, src: ['app/src/*'], dest: '<%= pathToDist %>', filter: 'isFile'},
 
                     // includes files within path and its sub-directories
-                    //{expand: true, src: ['app/src'], dest: 'dist/'},
+                    //{expand: true, src: ['app/src'], dest: '<%= pathToDist %>'},
 
                     // makes all src relative to cwd
-                    {expand: true, cwd: '<%= appName %>scss/', src: ['**'], dest: 'dist/scss/'},
+                    // {expand: true, cwd: '<%= appName %><%= appSass %>', src: ['**'], dest: '<%= pathToDist %>'},
 
                     // flattens results to a single level
-                    //{expand: true, flatten: true, src: ['path/**'], dest: 'dist/', filter: 'isFile'},
+                    //{expand: true, flatten: true, src: ['path/**'], dest: '<%= pathToDist %>', filter: 'isFile'},
                 ],
             },
             html: {
                 files: [
-                    {expand: true, cwd: '<%= appName %>', src: ['*.html'], dest: 'dist/'},
+                    {expand: true, cwd: '<%= appName %>', src: ['*.html'], dest: '<%= pathToDist %>'},
                 ],
             },
             twig: {
                 files: [
-                    {expand: true, cwd: '<%= appName %>', src: ['views/**/*.html.twig'], dest: 'dist/'},
+                    {expand: true, cwd: '<%= appName %>', src: ['views/**/*.html.twig'], dest: '<%= pathToDist %>'},
                 ],
             },
             php: {
                 files: [
-                    {expand: true, cwd: '<%= appName %>', src: ['*.php'], dest: 'dist/'},
+                    {expand: true, cwd: '<%= appName %>', src: ['*.php'], dest: '<%= pathToDist %>'},
                 ],
             },
             translations: {
                 files: [
-                    {expand: true, cwd: '<%= appName %>', src: ['translations/*.yml'], dest: 'dist/'},
+                    {expand: true, cwd: '<%= appName %>', src: ['<%= appTrans %>'], dest: '<%= pathToDist %>'},
                 ],
             },
             css: {
                 files: [
-                    {expand: true, cwd: '.tmp/css/', src: ['styles.css'], dest: 'dist/css/'},
+                    {expand: true, cwd: '<%= pathToTemp %>', src: ['**/styles.css'], dest: '<%= pathToDist %>'},
                 ],
             }
         },
         clean: {
-            folder: ["dist/", ".tmp/"]
+            folder: ["<%= pathToDist %>", "<%= pathToTemp %>"]
         },
         compass: {                  // Task
             dist: {
                 options: {
-                    sassDir: '<%= appName %>scss/',
-                    cssDir: '.tmp/css/'
+                    sassDir: '<%= appName %><%= appSass %>',
+                    cssDir: '<%= pathToTemp %>css/'
                 }
             }
         },
@@ -93,7 +97,7 @@ module.exports = function(grunt) {
             livereload: {
                 options: {
                     open: true,
-                    base: 'dist/',
+                    base: '<%= pathToDist %>',
                     middleware: function (connect) {
                         return [
                             serveStatic('dist')
@@ -137,13 +141,13 @@ module.exports = function(grunt) {
             },
             translations: {
                 files: [
-                    '<%= appName %>translations/*.yml',
+                    '<%= appName %><%= appTrans %>',
                 ],
                 tasks: ['copy:translations']
             },
             compass: {
                 files: [
-                    '<%= appName %>/scss/*',
+                    '<%= appName %><%= appSass %>*',
                 ],
                 tasks: ['compass', 'copy:css']
             },
@@ -153,10 +157,7 @@ module.exports = function(grunt) {
                     livereload: true
                 },
                 files: [
-                    'dist/index.html',
-                    'dist/css/*',
-                    'dist/index.php',
-                    'dist/translations/*'
+                    '<%= pathToDist %>**/*'
                 ]
             }
         }
@@ -190,11 +191,7 @@ module.exports = function(grunt) {
     grunt.registerTask('build', [
         'clean',
         'compass',
-        'copy:html',
-        'copy:php',
-        'copy:css',
-        'copy:translations',
-        'copy:twig'
+        'copy'
     ]);
 
 };
