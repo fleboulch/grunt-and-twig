@@ -10,6 +10,10 @@
 <body>
     <p class="test">Hello, {{ name }} & {{ name2 }} !</p>
 
+    {% include 'components/22.html.twig'
+        with {'description': 'app.description'|trans}
+    %}
+
     <p>{{ 'title'|trans }}</p>
     <p>{{ 'app.link'|trans }}</p>
 
