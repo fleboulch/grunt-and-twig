@@ -59,7 +59,7 @@ composer --version
 ```bash
 sudo npm install grunt-cli -g
 
-# check if grunt-cli is correctly installed
+# Check if grunt-cli is correctly installed
 grunt --version
 ```
 
@@ -69,12 +69,17 @@ grunt --version
 
 ### First run
 ```bash
-# download node_modules folder
+# Download node_modules folder
 npm install
-# get twig
+# Get twig
 composer install
 ```
 ### Dev
 ```bash
+# Run the livereload php server and other tasks (copy, compass, ...)
 grunt serve
+
+# Upgrade the version in the package.json file (for asset) and commit the changes
+# Available args : major | minor | patch
+npm version patch -m "Upgrade to %s" -f
 ```
