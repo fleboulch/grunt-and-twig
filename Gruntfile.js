@@ -1,6 +1,8 @@
 module.exports = function(grunt) {
 
-    require('jit-grunt')(grunt);
+    require('jit-grunt')(grunt, {
+        useminPrepare: 'grunt-usemin',
+    });
 
     // new grunt-contrib-connect need serve-static
     var serveStatic = require('serve-static');
@@ -10,6 +12,8 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
         appName: 'app/',
         appTrans: 'translations/*.yml',
+        jsDirectory: 'js/',
+        viewsDirectory: 'views/',
         appSass: 'scss/',
         pathToDist: 'dist/',
         pathToTemp: '.tmp/',
@@ -72,10 +76,16 @@ module.exports = function(grunt) {
                 files: [
                     {expand: true, cwd: '<%= pathToTemp %>', src: ['**/styles.css'], dest: '<%= pathToDist %>'},
                 ],
+            },
+            js: {
+                files: [
+                    {expand: true, cwd: '<%= appName %>', src: ['<%= jsDirectory %>**/*.js'], dest: '<%= pathToDist %>'},
+                ],
             }
         },
         clean: {
-            folder: ["<%= pathToDist %>", "<%= pathToTemp %>"]
+            dev: ["<%= pathToDist %>", "<%= pathToTemp %>"],
+            prod: ["<%= pathToDist %><%= jsDirectory %>**/*.js", '!<%= pathToDist %><%= jsDirectory %>**/<%= pkg.name %>.*.js']
         },
         compass: {                  // Task
             dist: {
@@ -160,6 +170,55 @@ module.exports = function(grunt) {
                     '<%= pathToDist %>**/*'
                 ]
             }
+        },
+        filerev: {
+            options: {
+                encoding: 'utf8',
+                algorithm: 'md5',
+                length: 8
+            },
+            source: {
+                files: [{
+                    src: [
+                        '<%= concat.dist.dest %>'
+                    ]
+                }]
+            }
+        },
+        useminPrepare: {
+            html: '<%= appName %><%= viewsDirectory %>base.html.twig',
+            options: {
+                // root:'app',
+                // dest: 'dist/',
+                // staging: 'dist'
+                // assetsDirs: ['dist/js']
+            }
+        },
+        concat: {
+            options: {
+                // separator: ';\n',
+            },
+            dist: {
+                src: [
+                    '<%= appName %><%= jsDirectory %>main.js',
+                    '<%= appName %><%= jsDirectory %>main2.js'
+                ],
+                dest: '<%= pathToDist %><%= jsDirectory %><%= pkg.name %>.js',
+            },
+        },
+        usemin: {
+            html: ['<%= pathToDist %><%= viewsDirectory %>base.html.twig'],
+            // css: ['dist/css/**/*.css'],
+            // js: ['dist/js/*.js'],
+            options: {
+            //     dirs: ['dist/js'],
+                assetsDirs: ['<%= pathToDist %>'],
+            //     patterns: {
+            //         js: [
+            //             [/["']([^:"']+\.(?:png|gif|jpe?g))["']/img, 'Image replacement in js files']
+            //         ]
+            //     }
+            }
         }
     });
 
@@ -168,10 +227,10 @@ module.exports = function(grunt) {
     //grunt.loadNpmTasks('grunt-contrib-copy');
 
     // Default task(s).
-    grunt.registerTask('default', ['uglify']);
+    grunt.registerTask('default', ['serve']);
 
     // custom task(s)
-    grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
+    grunt.registerTask('serve', 'Compile then start a connect web server with livereload', function (target) {
 
         if (target === 'html') {
             return grunt.task.run([
@@ -192,6 +251,15 @@ module.exports = function(grunt) {
         'clean',
         'compass',
         'copy'
+    ]);
+
+    grunt.registerTask('prod', [
+        'build',
+        'useminPrepare',
+        'concat',
+        'filerev',
+        'usemin',
+        'clean:prod'
     ]);
 
 };
