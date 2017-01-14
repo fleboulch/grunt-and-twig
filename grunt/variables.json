@@ -1,0 +1,9 @@
+{
+  "pathToTemp": ".tmp/",
+  "appName": "app/",
+  "pathToDist": "dist/",
+  "appTrans": "translations/",
+  "jsDirectory": "js/",
+  "viewsDirectory": "views/",
+  "appSass": "scss/"
+}

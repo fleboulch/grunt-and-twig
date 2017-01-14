@@ -10,13 +10,7 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        appName: 'app/',
-        appTrans: 'translations/*.yml',
-        jsDirectory: 'js/',
-        viewsDirectory: 'views/',
-        appSass: 'scss/',
-        pathToDist: 'dist/',
-        pathToTemp: '.tmp/',
+        var: grunt.file.readJSON('grunt/variables.json'),
         uglify: {
             options: {
                 banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
@@ -40,58 +34,58 @@ module.exports = function(grunt) {
             test: {
                 files: [
                     // includes files within path
-                    //{expand: true, src: ['app/src/*'], dest: '<%= pathToDist %>', filter: 'isFile'},
+                    //{expand: true, src: ['app/src/*'], dest: '<%= var.pathToDist %>', filter: 'isFile'},
 
                     // includes files within path and its sub-directories
-                    //{expand: true, src: ['app/src'], dest: '<%= pathToDist %>'},
+                    //{expand: true, src: ['app/src'], dest: '<%= var.pathToDist %>'},
 
                     // makes all src relative to cwd
-                    // {expand: true, cwd: '<%= appName %><%= appSass %>', src: ['**'], dest: '<%= pathToDist %>'},
+                    // {expand: true, cwd: '<%= var.appName %><%= var.appSass %>', src: ['**'], dest: '<%= var.pathToDist %>'},
 
                     // flattens results to a single level
-                    //{expand: true, flatten: true, src: ['path/**'], dest: '<%= pathToDist %>', filter: 'isFile'},
+                    //{expand: true, flatten: true, src: ['path/**'], dest: '<%= var.pathToDist %>', filter: 'isFile'},
                 ],
             },
             html: {
                 files: [
-                    {expand: true, cwd: '<%= appName %>', src: ['*.html'], dest: '<%= pathToDist %>'},
+                    {expand: true, cwd: '<%= var.appName %>', src: ['*.html'], dest: '<%= var.pathToDist %>'},
                 ],
             },
             twig: {
                 files: [
-                    {expand: true, cwd: '<%= appName %>', src: ['views/**/*.html.twig'], dest: '<%= pathToDist %>'},
+                    {expand: true, cwd: '<%= var.appName %>', src: ['<%= var.viewsDirectory %>**/*.html.twig'], dest: '<%= var.pathToDist %>'},
                 ],
             },
             php: {
                 files: [
-                    {expand: true, cwd: '<%= appName %>', src: ['*.php'], dest: '<%= pathToDist %>'},
+                    {expand: true, cwd: '<%= var.appName %>', src: ['*.php'], dest: '<%= var.pathToDist %>'},
                 ],
             },
             translations: {
                 files: [
-                    {expand: true, cwd: '<%= appName %>', src: ['<%= appTrans %>'], dest: '<%= pathToDist %>'},
+                    {expand: true, cwd: '<%= var.appName %>', src: ['<%= var.appTrans %>*.yml'], dest: '<%= var.pathToDist %>'},
                 ],
             },
             css: {
                 files: [
-                    {expand: true, cwd: '<%= pathToTemp %>', src: ['**/styles.css'], dest: '<%= pathToDist %>'},
+                    {expand: true, cwd: '<%= var.pathToTemp %>', src: ['**/styles.css'], dest: '<%= var.pathToDist %>'},
                 ],
             },
             js: {
                 files: [
-                    {expand: true, cwd: '<%= appName %>', src: ['<%= jsDirectory %>**/*.js'], dest: '<%= pathToDist %>'},
+                    {expand: true, cwd: '<%= var.appName %>', src: ['<%= var.jsDirectory %>**/*.js'], dest: '<%= var.pathToDist %>'},
                 ],
             }
         },
         clean: {
-            dev: ["<%= pathToDist %>", "<%= pathToTemp %>"],
-            prod: ["<%= pathToDist %><%= jsDirectory %>**/*.js", '!<%= pathToDist %><%= jsDirectory %>**/<%= pkg.name %>.*.js']
+            dev: ["<%= var.pathToDist %>", "<%= var.pathToTemp %>"],
+            prod: ["<%= var.pathToDist %><%= var.jsDirectory %>**/*.js", '!<%= var.pathToDist %><%= var.jsDirectory %>**/<%= pkg.name %>.*.js']
         },
         compass: {                  // Task
             dist: {
                 options: {
-                    sassDir: '<%= appName %><%= appSass %>',
-                    cssDir: '<%= pathToTemp %>css/'
+                    sassDir: '<%= var.appName %><%= var.appSass %>',
+                    cssDir: '<%= var.pathToTemp %>css/'
                 }
             }
         },
@@ -107,7 +101,7 @@ module.exports = function(grunt) {
             livereload: {
                 options: {
                     open: true,
-                    base: '<%= pathToDist %>',
+                    base: '<%= var.pathToDist %>',
                     middleware: function (connect) {
                         return [
                             serveStatic('dist')
@@ -126,7 +120,7 @@ module.exports = function(grunt) {
         watch: {
             html: {
                 files: [
-                    '<%= appName %>index.html',
+                    '<%= var.appName %>index.html',
                 ],
                 tasks: ['copy:html']
                 //options: {
@@ -135,7 +129,7 @@ module.exports = function(grunt) {
             },
             twig: {
                 files: [
-                    '<%= appName %>views/{,*/}*.html.twig',
+                    '<%= var.appName %><%= var.viewsDirectory %>{,*/}*.html.twig',
                 ],
                 tasks: ['copy:twig'],
                 options: {
@@ -145,19 +139,19 @@ module.exports = function(grunt) {
             },
             php: {
                 files: [
-                    '<%= appName %>index.php',
+                    '<%= var.appName %>index.php',
                 ],
                 tasks: ['copy:php']
             },
             translations: {
                 files: [
-                    '<%= appName %><%= appTrans %>',
+                    '<%= var.appName %><%= var.appTrans %>*.yml',
                 ],
                 tasks: ['copy:translations']
             },
             compass: {
                 files: [
-                    '<%= appName %><%= appSass %>*',
+                    '<%= var.appName %><%= var.appSass %>*',
                 ],
                 tasks: ['compass', 'copy:css']
             },
@@ -167,7 +161,7 @@ module.exports = function(grunt) {
                     livereload: true
                 },
                 files: [
-                    '<%= pathToDist %>**/*'
+                    '<%= var.pathToDist %>**/*'
                 ]
             }
         },
@@ -186,7 +180,7 @@ module.exports = function(grunt) {
             }
         },
         useminPrepare: {
-            html: '<%= appName %><%= viewsDirectory %>base.html.twig',
+            html: '<%= var.appName %><%= var.viewsDirectory %>base.html.twig',
             options: {
                 // root:'app',
                 // dest: 'dist/',
@@ -200,19 +194,19 @@ module.exports = function(grunt) {
             },
             dist: {
                 src: [
-                    '<%= appName %><%= jsDirectory %>main.js',
-                    '<%= appName %><%= jsDirectory %>main2.js'
+                    '<%= var.appName %><%= var.jsDirectory %>main.js',
+                    '<%= var.appName %><%= var.jsDirectory %>main2.js'
                 ],
-                dest: '<%= pathToDist %><%= jsDirectory %><%= pkg.name %>.js',
+                dest: '<%= var.pathToDist %><%= var.jsDirectory %><%= pkg.name %>.js',
             },
         },
         usemin: {
-            html: ['<%= pathToDist %><%= viewsDirectory %>base.html.twig'],
+            html: ['<%= var.pathToDist %><%= var.viewsDirectory %>base.html.twig'],
             // css: ['dist/css/**/*.css'],
             // js: ['dist/js/*.js'],
             options: {
             //     dirs: ['dist/js'],
-                assetsDirs: ['<%= pathToDist %>'],
+                assetsDirs: ['<%= var.pathToDist %>'],
             //     patterns: {
             //         js: [
             //             [/["']([^:"']+\.(?:png|gif|jpe?g))["']/img, 'Image replacement in js files']
