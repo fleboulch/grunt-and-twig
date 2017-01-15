@@ -21,6 +21,23 @@ module.exports = function(grunt) {
                 }
             }
         },
+        dev_prod_switch: {
+            options: {
+                // Can be ran as `grunt --env=dev` or ``grunt --env=prod``
+                environment: grunt.option('env') || 'dev', // 'prod' or 'dev'
+                env_char: '#',
+                env_block_dev: 'env:dev',
+                env_block_prod: 'env:prod'
+            },
+            dynamic_mappings: {
+                files: [{
+                    expand: true,
+                    cwd: './app/views',
+                    src: ['*.html.twig'],
+                    dest: './.tmp/views/'
+                }]
+            }
+        },
         php: {
             dist: {
                 options: {
@@ -250,14 +267,26 @@ module.exports = function(grunt) {
         ]);
     });
 
-    grunt.registerTask('build', [
-        'clean',
-        'compass',
-        'copy'
-    ]);
+    grunt.registerTask('build', 'Build the app given the env option\n- If --env=prod option is added it\'s a prod build,\n- else, it\'s a dev build', function () {
+
+        grunt.task.run([
+            'clean',
+            'compass',
+            'copy',
+            'dev_prod_switch'
+        ]);
+
+        // if '--env=prod' option is passed
+        if (grunt.option('env') === 'prod') {
+            grunt.task.run([
+                'prod'
+            ]);
+        }
+
+    });
 
     grunt.registerTask('prod', [
-        'build',
+        // 'build',
         'useminPrepare',
         'concat',
         'uglify:build',
