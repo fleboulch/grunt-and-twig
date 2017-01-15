@@ -68,7 +68,7 @@ module.exports = function(grunt) {
             },
             css: {
                 files: [
-                    {expand: true, cwd: '<%= var.pathToTemp %>', src: ['**/styles.css'], dest: '<%= var.pathToDist %>'},
+                    {expand: true, cwd: '<%= var.pathToTemp %>', src: ['**/*.css'], dest: '<%= var.pathToDist %>'},
                 ],
             },
             js: {
@@ -79,7 +79,7 @@ module.exports = function(grunt) {
         },
         clean: {
             dev: ["<%= var.pathToDist %>", "<%= var.pathToTemp %>"],
-            prod: ["<%= var.pathToDist %><%= var.jsDirectory %>**/*.js", '!<%= var.pathToDist %><%= var.jsDirectory %>**/<%= pkg.name %>.*.js']
+            prod: ["<%= var.pathToDist %><%= var.jsDirectory %>**/*.js", '!<%= var.pathToDist %><%= var.jsDirectory %>**/<%= pkg.name %>.*.js', "<%= var.pathToDist %><%= var.cssDirectory %>**/*.css", '!<%= var.pathToDist %><%= var.cssDirectory %>**/<%= pkg.name %>.*.css'],
         },
         compass: {                  // Task
             dist: {
@@ -174,7 +174,8 @@ module.exports = function(grunt) {
             source: {
                 files: [{
                     src: [
-                        '<%= concat.dist.dest %>'
+                        '<%= concat.js.dest %>',
+                        '<%= concat.css.dest %>'
                     ]
                 }]
             }
@@ -192,12 +193,19 @@ module.exports = function(grunt) {
             options: {
                 // separator: ';\n',
             },
-            dist: {
+            js: {
                 src: [
                     '<%= var.appName %><%= var.jsDirectory %>main.js',
                     '<%= var.appName %><%= var.jsDirectory %>main2.js'
                 ],
                 dest: '<%= var.pathToDist %><%= var.jsDirectory %><%= pkg.name %>.js',
+            },
+            css: {
+                src: [
+                    '<%= var.pathToTemp %>css/1.css',
+                    '<%= var.pathToTemp %>css/styles.css'
+                ],
+                dest: '<%= var.pathToDist %><%= var.cssDirectory %><%= pkg.name %>.css',
             },
         },
         usemin: {
