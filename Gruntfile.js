@@ -17,7 +17,7 @@ module.exports = function(grunt) {
             },
             build: {
                 files: {
-                    '<%= var.pathToDist %><%= var.jsDirectory %><%= pkg.name %>.min.js': ['<%= concat.js.dest %>']
+                    '<%= var.pathToDist %><%= var.jsDirectory %><%= pkg.name %>.js': ['<%= concat.js.dest %>']
                 }
             }
         },
@@ -175,7 +175,7 @@ module.exports = function(grunt) {
             source: {
                 files: [{
                     src: [
-                        '<%= var.pathToDist %><%= var.jsDirectory %><%= pkg.name %>.min.js',
+                        '<%= var.pathToDist %><%= var.jsDirectory %><%= pkg.name %>.js',
                         '<%= concat.css.dest %>'
                     ]
                 }]
@@ -199,7 +199,7 @@ module.exports = function(grunt) {
                     '<%= var.appName %><%= var.jsDirectory %>main.js',
                     '<%= var.appName %><%= var.jsDirectory %>main2.js'
                 ],
-                dest: '<%= var.pathToDist %><%= var.jsDirectory %><%= pkg.name %>.js',
+                dest: '<%= var.pathToDist %><%= var.jsDirectory %><%= pkg.name %>_temp.js',
             },
             css: {
                 src: [
