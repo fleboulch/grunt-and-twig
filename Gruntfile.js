@@ -21,6 +21,23 @@ module.exports = function(grunt) {
                 }
             }
         },
+        dev_prod_switch: {
+            options: {
+                // Can be ran as `grunt --env=dev` or ``grunt --env=prod``
+                environment: grunt.option('env') || 'dev', // 'prod' or 'dev'
+                env_char: '#',
+                env_block_dev: 'env:dev',
+                env_block_prod: 'env:prod'
+            },
+            dynamic_mappings: {
+                files: [{
+                    expand: true,
+                    cwd: '<%= var.appName %>',
+                    src: ['<%= var.viewsDirectory %>**/*.html.twig'],
+                    dest: '<%= var.pathToTemp %>'
+                }]
+            }
+        },
         php: {
             dist: {
                 options: {
@@ -54,7 +71,7 @@ module.exports = function(grunt) {
             },
             twig: {
                 files: [
-                    {expand: true, cwd: '<%= var.appName %>', src: ['<%= var.viewsDirectory %>**/*.html.twig'], dest: '<%= var.pathToDist %>'},
+                    {expand: true, cwd: '<%= var.pathToTemp %>', src: ['<%= var.viewsDirectory %>**/*.html.twig'], dest: '<%= var.pathToDist %>'},
                 ],
             },
             php: {
@@ -132,7 +149,7 @@ module.exports = function(grunt) {
                 files: [
                     '<%= var.appName %><%= var.viewsDirectory %>{,*/}*.html.twig',
                 ],
-                tasks: ['copy:twig'],
+                tasks: ['dev_prod_switch', 'copy:twig'],
                 options: {
                     spawn: false,
                     livereload: true
@@ -250,14 +267,25 @@ module.exports = function(grunt) {
         ]);
     });
 
-    grunt.registerTask('build', [
-        'clean',
-        'compass',
-        'copy'
-    ]);
+    grunt.registerTask('build', 'Build the app given the env option\n- If --env=prod option is added it\'s a prod build,\n- else, it\'s a dev build', function () {
+
+        grunt.task.run([
+            'clean',
+            'compass',
+            'dev_prod_switch',
+            'copy'
+        ]);
+
+        // if '--env=prod' option is passed
+        if (grunt.option('env') === 'prod') {
+            grunt.task.run([
+                'prod'
+            ]);
+        }
+
+    });
 
     grunt.registerTask('prod', [
-        'build',
         'useminPrepare',
         'concat',
         'uglify:build',
