@@ -18,7 +18,6 @@
     <p>This will be visable in 'dev' environment</p>
     <!-- env:dev:end -->
 
-
     <!-- env:prod -->
     <h1>For everyone</h1>
     <p>This will be visable in 'prod' environment</p>
@@ -38,7 +37,9 @@
         <script src="js/main2.js"></script>
     <!-- endbuild -->
 
-    <script src="//localhost:35729/livereload.js"></script>
+    <!-- env:dev -->
+        <script src="//localhost:35729/livereload.js"></script>
+    <!-- env:dev:end -->
 
 </body>
 </html>

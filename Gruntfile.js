@@ -32,9 +32,9 @@ module.exports = function(grunt) {
             dynamic_mappings: {
                 files: [{
                     expand: true,
-                    cwd: './app/views',
-                    src: ['*.html.twig'],
-                    dest: './.tmp/views/'
+                    cwd: '<%= var.appName %>',
+                    src: ['<%= var.viewsDirectory %>**/*.html.twig'],
+                    dest: '<%= var.pathToTemp %>'
                 }]
             }
         },
@@ -71,7 +71,7 @@ module.exports = function(grunt) {
             },
             twig: {
                 files: [
-                    {expand: true, cwd: '<%= var.appName %>', src: ['<%= var.viewsDirectory %>**/*.html.twig'], dest: '<%= var.pathToDist %>'},
+                    {expand: true, cwd: '<%= var.pathToTemp %>', src: ['<%= var.viewsDirectory %>**/*.html.twig'], dest: '<%= var.pathToDist %>'},
                 ],
             },
             php: {
@@ -149,7 +149,7 @@ module.exports = function(grunt) {
                 files: [
                     '<%= var.appName %><%= var.viewsDirectory %>{,*/}*.html.twig',
                 ],
-                tasks: ['copy:twig'],
+                tasks: ['dev_prod_switch', 'copy:twig'],
                 options: {
                     spawn: false,
                     livereload: true
@@ -272,8 +272,8 @@ module.exports = function(grunt) {
         grunt.task.run([
             'clean',
             'compass',
-            'copy',
-            'dev_prod_switch'
+            'dev_prod_switch',
+            'copy'
         ]);
 
         // if '--env=prod' option is passed
@@ -286,7 +286,6 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('prod', [
-        // 'build',
         'useminPrepare',
         'concat',
         'uglify:build',
