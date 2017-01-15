@@ -13,11 +13,12 @@ module.exports = function(grunt) {
         var: grunt.file.readJSON('grunt/variables.json'),
         uglify: {
             options: {
-                banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+                banner: '/*! <%= pkg.name %> */\n'
             },
             build: {
-                src: 'src/<%= pkg.name %>.js',
-                dest: 'build/<%= pkg.name %>.min.js'
+                files: {
+                    '<%= var.pathToDist %><%= var.jsDirectory %><%= pkg.name %>.js': ['<%= concat.js.dest %>']
+                }
             }
         },
         php: {
@@ -174,7 +175,7 @@ module.exports = function(grunt) {
             source: {
                 files: [{
                     src: [
-                        '<%= concat.js.dest %>',
+                        '<%= var.pathToDist %><%= var.jsDirectory %><%= pkg.name %>.js',
                         '<%= concat.css.dest %>'
                     ]
                 }]
@@ -198,7 +199,7 @@ module.exports = function(grunt) {
                     '<%= var.appName %><%= var.jsDirectory %>main.js',
                     '<%= var.appName %><%= var.jsDirectory %>main2.js'
                 ],
-                dest: '<%= var.pathToDist %><%= var.jsDirectory %><%= pkg.name %>.js',
+                dest: '<%= var.pathToDist %><%= var.jsDirectory %><%= pkg.name %>_temp.js',
             },
             css: {
                 src: [
@@ -259,6 +260,7 @@ module.exports = function(grunt) {
         'build',
         'useminPrepare',
         'concat',
+        'uglify:build',
         'filerev',
         'usemin',
         'clean:prod'
