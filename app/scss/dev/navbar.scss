@@ -5,3 +5,15 @@
 .end-line {
   color: blue;
 }
+
+a {
+  display: flex;
+}
+
+:fullscreen a {
+  display: flex
+}
+
+div {
+  transform: rotate(180deg);
+}
