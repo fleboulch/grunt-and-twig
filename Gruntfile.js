@@ -97,7 +97,7 @@ module.exports = function(grunt) {
         },
         clean: {
             dev: ["<%= var.pathToDist %>", "<%= var.pathToTemp %>"],
-            prod: ["<%= var.pathToDist %><%= var.jsDirectory %>**/*.js", '!<%= var.pathToDist %><%= var.jsDirectory %>**/<%= pkg.name %>.*.js', "<%= var.pathToDist %><%= var.cssDirectory %>**/*.css", '!<%= var.pathToDist %><%= var.cssDirectory %>**/<%= pkg.name %>.*.css'],
+            prod: ["<%= var.pathToDist %><%= var.jsDirectory %>**/*.js", '!<%= var.pathToDist %><%= var.jsDirectory %>**/<%= pkg.name %>.*.js', "<%= var.pathToDist %><%= var.cssDirectory %>**/*.css", '!<%= var.pathToDist %><%= var.cssDirectory %>**/<%= pkg.name %>.min.*.css'],
         },
         compass: {                  // Task
             dist: {
@@ -193,7 +193,7 @@ module.exports = function(grunt) {
                 files: [{
                     src: [
                         '<%= var.pathToDist %><%= var.jsDirectory %><%= pkg.name %>.js',
-                        '<%= concat.css.dest %>'
+                        '<%= var.pathToDist %><%= var.cssDirectory %><%= pkg.name %>.min.css'
                     ]
                 }]
             }
@@ -225,6 +225,17 @@ module.exports = function(grunt) {
                 ],
                 dest: '<%= var.pathToDist %><%= var.cssDirectory %><%= pkg.name %>.css',
             },
+        },
+        cssmin: {
+            build: {
+                files: [{
+                    expand: true,
+                    cwd: '<%= var.pathToDist %><%= var.cssDirectory %>',
+                    src: ['<%= pkg.name %>.css'],
+                    dest: '<%= var.pathToDist %><%= var.cssDirectory %>',
+                    ext: '.min.css'
+                }]
+            }
         },
         usemin: {
             html: ['<%= var.pathToDist %><%= var.viewsDirectory %>base.html.twig'],
@@ -288,6 +299,7 @@ module.exports = function(grunt) {
     grunt.registerTask('prod', [
         'useminPrepare',
         'concat',
+        'cssmin:build',
         'uglify:build',
         'filerev',
         'usemin',
