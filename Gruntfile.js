@@ -246,7 +246,10 @@ module.exports = function(grunt) {
             }
         },
         usemin: {
-            html: ['<%= var.pathToDist %><%= var.viewsDirectory %>base.html.twig'],
+            html: [
+                '<%= var.pathToDist %><%= var.viewsDirectory %>base.html.twig',
+                '<%= var.pathToDist %><%= var.viewsDirectory %>rm.html.twig'
+            ],
             // css: ['dist/css/**/*.css'],
             // js: ['dist/js/*.js'],
             options: {

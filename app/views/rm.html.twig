@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <!-- build:css css/portfolio.min.css -->
+        <link rel="stylesheet" href="css/1.css">
+        <link rel="stylesheet" href="css/styles.css">
+    <!-- endbuild -->
+
+</head>
+<body>
+
+    <h1 style="text-align: center;">RMMM page</h1>
+
+    <!-- env:dev -->
+    <h1>For devs eyes only</h1>
+    <p>This will be visable in 'dev' environment</p>
+    <!-- env:dev:end -->
+
+    <!-- env:prod -->
+    <h1>For everyone</h1>
+    <p>This will be visable in 'prod' environment</p>
+    <!-- env:prod:end -->
+
+    <p class="test">Hello, {{ name }} & {{ name2 }} !</p>
+
+    {% include 'components/22.html.twig'
+        with {'description': 'app.description'|trans}
+    %}
+
+    <p>{{ 'title'|trans }}</p>
+    <p>{{ 'app.link'|trans }}</p>
+
+    <!-- build:js js/portfolio.min.js -->
+        <script src="js/main.js"></script>
+        <script src="js/main2.js"></script>
+    <!-- endbuild -->
+
+    <!-- env:dev -->
+        <script src="//localhost:35729/livereload.js"></script>
+    <!-- env:dev:end -->
+
+</body>
+</html>
