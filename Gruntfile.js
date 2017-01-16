@@ -138,7 +138,7 @@ module.exports = function(grunt) {
         watch: {
             html: {
                 files: [
-                    '<%= var.appName %>index.html',
+                    '<%= var.appName %>*.html',
                 ],
                 tasks: ['copy:html']
                 //options: {
@@ -157,9 +157,15 @@ module.exports = function(grunt) {
             },
             php: {
                 files: [
-                    '<%= var.appName %>index.php',
+                    '<%= var.appName %>*.php',
                 ],
                 tasks: ['copy:php']
+            },
+            js: {
+                files: [
+                    '<%= var.appName %><%= jsDirectory %>**/*.js',
+                ],
+                tasks: ['copy:js']
             },
             translations: {
                 files: [
@@ -214,14 +220,16 @@ module.exports = function(grunt) {
             js: {
                 src: [
                     '<%= var.appName %><%= var.jsDirectory %>main.js',
-                    '<%= var.appName %><%= var.jsDirectory %>main2.js'
+                    '<%= var.appName %><%= var.jsDirectory %>main2.js',
+                    '<%= var.appName %><%= var.jsDirectory %>dev/dev.js'
                 ],
                 dest: '<%= var.pathToDist %><%= var.jsDirectory %><%= pkg.name %>.js',
             },
             css: {
                 src: [
                     '<%= var.pathToTemp %>css/1.css',
-                    '<%= var.pathToTemp %>css/styles.css'
+                    '<%= var.pathToTemp %>css/styles.css',
+                    '<%= var.pathToTemp %>css/dev/navbar.css'
                 ],
                 dest: '<%= var.pathToDist %><%= var.cssDirectory %><%= pkg.name %>.css',
             },
