@@ -101,7 +101,8 @@ module.exports = function(grunt) {
                 "<%= var.pathToDist %><%= var.jsDirectory %>**/*.js",
                 '!<%= var.pathToDist %><%= var.jsDirectory %>**/<%= pkg.name %>.min.*.js',
                 "<%= var.pathToDist %><%= var.cssDirectory %>**/*.css",
-                '!<%= var.pathToDist %><%= var.cssDirectory %>**/<%= pkg.name %>.min.*.css'
+                '!<%= var.pathToDist %><%= var.cssDirectory %>**/<%= pkg.name %>.min.*.css',
+                '<%= var.pathToTemp %>'
             ]
         },
         compass: {
@@ -110,6 +111,16 @@ module.exports = function(grunt) {
                     sassDir: '<%= var.appName %><%= var.appSass %>',
                     cssDir: '<%= var.pathToTemp %>css/'
                 }
+            }
+        },
+        postcss: {
+            options: {
+                processors: [
+                    require('autoprefixer')({browsers: ['last 5 versions']})
+                ]
+            },
+            dist: {
+                src: '<%= compass.dist.options.cssDir %>**/*.css'
             }
         },
         connect: {
@@ -180,9 +191,9 @@ module.exports = function(grunt) {
             },
             compass: {
                 files: [
-                    '<%= var.appName %><%= var.appSass %>*'
+                    '<%= var.appName %><%= var.appSass %>**/*.scss'
                 ],
-                tasks: ['compass', 'copy:css']
+                tasks: ['compass', 'postcss', 'copy:css']
             },
             livereload: {
                 options: {
@@ -318,6 +329,7 @@ module.exports = function(grunt) {
         grunt.task.run([
             'clean',
             'compass',
+            'postcss',
             'dev_prod_switch',
             'copy'
         ]);

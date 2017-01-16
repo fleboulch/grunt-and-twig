@@ -18,6 +18,7 @@
     "grunt-dev-prod-switch": "^0.1.8",
     "grunt-filerev": "^2.3.1",
     "grunt-php": "^1.5.1",
+    "grunt-postcss": "^0.8.0",
     "grunt-usemin": "^3.1.1",
     "jit-grunt": "^0.10.0",
     "serve-static": "^1.11.1"
