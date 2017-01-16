@@ -261,6 +261,19 @@ module.exports = function(grunt) {
             //         ]
             //     }
             }
+        },
+        htmlmin: {
+            dist: {
+                options: {
+                    removeComments: true
+                },
+                files: [{
+                    expand: true,
+                    cwd: '<%= var.pathToDist %>',
+                    src: ['<%= var.viewsDirectory %>**/*.html.twig'],
+                    dest: '<%= var.pathToDist %>'
+                }]
+            }
         }
     });
 
@@ -314,6 +327,7 @@ module.exports = function(grunt) {
         'uglify:build',
         'filerev',
         'usemin',
+        'htmlmin',
         'clean:prod'
     ]);
 
