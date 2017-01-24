@@ -95,6 +95,10 @@ module.exports = function(grunt) {
                 ]
             }
         },
+        jshint: {
+            beforeconcat: ['<%= var.appName %><%= var.jsDirectory %>**/*.js'],
+            afterconcat: ['<%= var.pathToDist %><%= var.jsDirectory %><%= pkg.name %>.js']
+        },
         clean: {
             dev: ["<%= var.pathToDist %>", "<%= var.pathToTemp %>"],
             prod: [
@@ -181,7 +185,7 @@ module.exports = function(grunt) {
                 files: [
                     '<%= var.appName %><%= jsDirectory %>**/*.js'
                 ],
-                tasks: ['copy:js']
+                tasks: ['jshint:beforeconcat', 'copy:js']
             },
             translations: {
                 files: [
@@ -331,6 +335,7 @@ module.exports = function(grunt) {
             'compass',
             'postcss',
             'dev_prod_switch',
+            'jshint:beforeconcat',
             'copy'
         ]);
 
@@ -346,6 +351,7 @@ module.exports = function(grunt) {
     grunt.registerTask('prod', [
         'useminPrepare',
         'concat',
+        'jshint:afterconcat',
         'cssmin:build',
         'uglify:build',
         'filerev',
