@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="css/1.css">
         <link rel="stylesheet" href="css/styles.css">
         <link rel="stylesheet" href="css/dev/navbar.css">
+        <link rel="stylesheet" href="css/ribbon.css">
     <!-- endbuild -->
 
 
@@ -21,6 +22,10 @@
     -->
 
     {# Another comment #}
+
+    <!-- env:dev -->
+        {% include 'ribbon.html.twig' %}
+    <!-- env:dev:end -->
 
     <!-- env:dev -->
     <h1>For devs eyes only</h1>
