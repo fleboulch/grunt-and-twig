@@ -5,4 +5,5 @@ dist/
 .tmp/
 vendor/
 *.iml
+.tmp-image/
 npm-debug.log

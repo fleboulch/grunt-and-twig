@@ -63,6 +63,14 @@ sudo npm install grunt-cli -g
 grunt --version
 ```
 
+# Installing GraphicsMagick (for grunt-responsive-images task)
+
+```bash
+sudo add-apt-repository ppa:dhor/myway
+sudo apt-get update
+sudo apt-get install graphicsmagick
+```
+
 # In the project
 
 *Once you have downloaded the sources from github, go to the root folder*
