@@ -1,9 +1,11 @@
 {
   "pathToTemp": ".tmp/",
+  "pathToImgTemp": ".tmp-image/",
   "appName": "app/",
   "pathToDist": "dist/",
   "appTrans": "translations/",
   "jsDirectory": "js/",
+  "imgDirectory": "image/",
   "viewsDirectory": "views/",
   "appSass": "scss/",
   "cssDirectory": "css/"

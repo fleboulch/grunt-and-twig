@@ -89,6 +89,14 @@ module.exports = function(grunt) {
                     {expand: true, cwd: '<%= var.pathToTemp %>', src: ['**/*.css'], dest: '<%= var.pathToDist %>'}
                 ]
             },
+            jpg: {
+                files: [{
+                    expand: true,
+                    cwd: '<%= var.pathToImgTemp %>',
+                    src: ['**/*.{jpg,jpeg}'],
+                    dest: '<%= var.pathToDist %><%= var.imgDirectory %>'
+                }]
+            },
             js: {
                 files: [
                     {expand: true, cwd: '<%= var.appName %>', src: ['<%= var.jsDirectory %>**/*.js'], dest: '<%= var.pathToDist %>'}
@@ -106,7 +114,8 @@ module.exports = function(grunt) {
                 '!<%= var.pathToDist %><%= var.jsDirectory %>**/<%= pkg.name %>.min.*.js',
                 "<%= var.pathToDist %><%= var.cssDirectory %>**/*.css",
                 '!<%= var.pathToDist %><%= var.cssDirectory %>**/<%= pkg.name %>.min.*.css',
-                '<%= var.pathToTemp %>'
+                '<%= var.pathToTemp %>',
+                '<%= var.pathToImgTemp %>'
             ]
         },
         compass: {
@@ -233,6 +242,46 @@ module.exports = function(grunt) {
                 // assetsDirs: ['dist/js']
             }
         },
+        pngmin: {
+            compile: {
+                options: {
+                    ext: '.png',
+                },
+                files: [
+                    {
+                        expand: true,
+                        src: ['**/*.png'],
+                        cwd: '<%= var.pathToImgTemp %>',
+                        dest: '<%= var.pathToDist %><%= var.imgDirectory %>'
+                    }
+                ]
+            }
+        },
+        responsive_images: {
+            build: {
+                options: {
+                    sizes: [{
+                        name: 'small',
+                        width: 320
+                    },{
+                        name: 'medium',
+                        width: 640,
+                        quality: 95
+                    },{
+                        name: "large",
+                        width: 1024,
+                        // suffix: "_x2",
+                        quality: 90
+                    }]
+                },
+                files: [{
+                    expand: true,
+                    src: ['**/*.{jpg,gif,png}'],
+                    cwd: '<%= var.appName %><%= var.imgDirectory %>',
+                    custom_dest: '<%= var.pathToImgTemp %>{%= width %}/'
+                }]
+            }
+        },
         concat: {
             options: {
                 // separator: ';\n',
@@ -331,12 +380,14 @@ module.exports = function(grunt) {
     grunt.registerTask('build', 'Build the app given the env option\n- If --env=prod option is added it\'s a prod build,\n- else, it\'s a dev build', function () {
 
         grunt.task.run([
-            'clean',
+            'clean:dev',
             'compass',
             'postcss',
             'dev_prod_switch',
             'jshint:beforeconcat',
-            'copy'
+            'responsive_images',
+            'copy',
+            'pngmin' // works great but only for png
         ]);
 
         // if '--env=prod' option is passed

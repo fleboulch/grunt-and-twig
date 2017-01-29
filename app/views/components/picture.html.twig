@@ -1,0 +1,18 @@
+{% set sizes = [1024, 640, 320] %}
+
+{% if ext is not defined %}
+    {% set ext = 'jpg' %}
+{% endif %}
+
+<picture>
+    <!--[if IE 9]><video style="display: none;"><![endif]-->
+    {% for size in sizes %}
+        {% if not loop.last %}
+            <source srcset="image/{{ size }}/{{ name }}.{{ ext }}" media="(min-width: {{ size }}px)" />
+        {% else %}
+            <source srcset="image/{{ size }}/{{ name }}.{{ ext }}" />
+        {% endif %}
+    {% endfor %}
+    <!--[if IE 9]></video><![endif]-->
+    <img src="image/{{ sizes|last }}/{{ name }}.{{ ext }}" alt="{{ alt }}" />
+</picture>

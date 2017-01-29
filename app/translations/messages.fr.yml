@@ -3,3 +3,5 @@ ribbon: Dev fr
 app:
   link: Mon lien fr
   description: Le contenu est rédigé en français
+pictures:
+  home1: maison1

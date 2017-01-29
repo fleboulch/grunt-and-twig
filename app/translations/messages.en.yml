@@ -3,3 +3,5 @@ ribbon: Dev en
 app:
   link: My en link
   description: The content is written in english
+pictures:
+  home1: home1

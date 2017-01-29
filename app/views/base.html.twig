@@ -46,6 +46,17 @@
     <p>{{ 'title'|trans }}</p>
     <p>{{ 'app.link'|trans }}</p>
 
+    {% include 'components/picture.html.twig' with {
+        'name': 'hq',
+        'ext': 'png',
+        'alt': 'pictures.home1'|trans
+    } %}
+
+    {% include 'components/picture.html.twig' with {
+        'name': 'unsplash',
+        'alt': 'pictures.home1'|trans
+    } %}
+
     <!-- build:js js/portfolio.min.js -->
         <script src="js/main.js"></script>
         <script src="js/main2.js"></script>
