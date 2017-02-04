@@ -202,6 +202,18 @@ module.exports = function(grunt) {
                 ],
                 tasks: ['copy:translations']
             },
+            jpg: {
+                files: [
+                    '<%= var.appName %><%= var.imgDirectory %>**/*.{jpg,jpeg}'
+                ],
+                tasks: ['responsive_images', 'copy:jpg']
+            },
+            png: {
+                files: [
+                    '<%= var.appName %><%= var.imgDirectory %>**/*.png'
+                ],
+                tasks: ['responsive_images', 'pngmin']
+            },
             compass: {
                 files: [
                     '<%= var.appName %><%= var.appSass %>**/*.scss'
@@ -261,17 +273,37 @@ module.exports = function(grunt) {
             build: {
                 options: {
                     sizes: [{
-                        name: 'small',
-                        width: 320
+                        name: 'x-small',
+                        width: 360
                     },{
-                        name: 'medium',
-                        width: 640,
+                        name: 'small',
+                        width: 768,
                         quality: 95
                     },{
-                        name: "large",
+                        name: "medium",
                         width: 1024,
                         // suffix: "_x2",
                         quality: 90
+                    },{
+                        name: "large",
+                        width: 1440,
+                        // suffix: "_x2",
+                        quality: 85
+                    },{
+                        name: "x-large",
+                        width: 1920,
+                        // suffix: "_x2",
+                        quality: 80
+                    },{
+                        name: "xx-large",
+                        width: 3440,
+                        // suffix: "_x2",
+                        quality: 65
+                    },{
+                        name: "i-mac",
+                        width: 5120,
+                        // suffix: "_x2",
+                        quality: 50
                     }]
                 },
                 files: [{

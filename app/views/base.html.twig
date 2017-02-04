@@ -29,12 +29,12 @@
 
     <!-- env:dev -->
     <h1>For devs eyes only</h1>
-    <p>This will be visable in 'dev' environment</p>
+    <p>This will be visible in 'dev' environment</p>
     <!-- env:dev:end -->
 
     <!-- env:prod -->
     <h1>For everyone</h1>
-    <p>This will be visable in 'prod' environment</p>
+    <p>This will be visible in 'prod' environment</p>
     <!-- env:prod:end -->
 
     <p class="test">Hello, {{ name }} & {{ name2 }} !</p>
@@ -45,6 +45,11 @@
 
     <p>{{ 'title'|trans }}</p>
     <p>{{ 'app.link'|trans }}</p>
+
+    {% include 'components/picture.html.twig' with {
+        'name': 'istic-env',
+        'alt': 'pictures.home1'|trans
+    } %}
 
     {% include 'components/picture.html.twig' with {
         'name': 'hq',
