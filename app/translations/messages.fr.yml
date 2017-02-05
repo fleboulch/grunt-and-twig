@@ -5,3 +5,10 @@ app:
   description: Le contenu est rédigé en français
 pictures:
   home1: maison1
+meta:
+  description: Portfolio de Florent LE BOULCH
+page_title:
+  homepage: Portfolio
+navbar:
+  home: Accueil
+  section1: Projets

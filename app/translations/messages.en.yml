@@ -5,3 +5,10 @@ app:
   description: The content is written in english
 pictures:
   home1: home1
+meta:
+  description: Florent Le Boulch's portfolio
+page_title:
+  homepage: Portfolio
+navbar:
+  home: Home
+  section1: Projects

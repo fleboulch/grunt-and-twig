@@ -6,7 +6,7 @@
   color: blue;
 }
 
-a {
+a .test {
   display: flex;
 }
 
@@ -14,6 +14,6 @@ a {
   display: flex
 }
 
-div {
+div .test {
   transform: rotate(180deg);
 }

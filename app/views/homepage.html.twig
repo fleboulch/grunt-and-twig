@@ -1,0 +1,26 @@
+{% extends "base.html.twig" %}
+
+{% block page_title %}{{ 'page_title.homepage'|trans }}{% endblock %}
+
+{% block content %}
+    <p class="test">Hello, {{ name }} et {{ name2 }} !</p>
+
+    <a href="">{{ 'navbar.home'|trans }}</a>
+    <a href="">{{ 'navbar.section1'|trans }}</a>
+
+    {% include 'components/picture.html.twig' with {
+        'name': 'istic-env',
+        'alt': 'pictures.home1'|trans
+    } %}
+
+    {% include 'components/picture.html.twig' with {
+        'name': 'hq',
+        'ext': 'png',
+        'alt': 'pictures.home1'|trans
+    } %}
+
+    {% include 'components/picture.html.twig' with {
+        'name': 'unsplash',
+        'alt': 'pictures.home1'|trans
+    } %}
+{% endblock %}
