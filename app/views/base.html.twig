@@ -1,55 +1,55 @@
 <!DOCTYPE html>
 <html lang="{{ locale }}">
-<head>
-    <meta charset="UTF-8">
-    <meta name="author" content="Florent LE BOULCH" />
-    <meta name="keywords" content="Florent LE BOULCH, portfolio" />
-    <meta name="description" content="{{ 'meta.description'|trans }}">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="author" content="Florent LE BOULCH" />
+        <meta name="keywords" content="Florent LE BOULCH, portfolio" />
+        <meta name="description" content="{{ 'meta.description'|trans }}">
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- unable IE to switch to compatibility style -->
-    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- mobile first -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- unable IE to switch to compatibility style -->
+        <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- mobile first -->
 
-    <!-- favicon -->
-    <link rel="icon" type="image/png" href="" />
+        <!-- favicon -->
+        <link rel="icon" type="image/png" href="" />
 
-    <title>{% block page_title %}{% endblock %}</title> <!-- the title of the page -->
+        <title>{% block page_title %}{% endblock %}</title> <!-- the title of the page -->
 
-    <!-- build:css css/portfolio.min.css -->
-        <link rel="stylesheet" href="css/1.css">
-        <link rel="stylesheet" href="css/styles.css">
-        <link rel="stylesheet" href="css/dev/navbar.css">
-        <link rel="stylesheet" href="css/ribbon.css">
-    <!-- endbuild -->
+        <!-- build:css css/portfolio.min.css -->
+            <link rel="stylesheet" href="css/1.css">
+            <link rel="stylesheet" href="css/styles.css">
+            <link rel="stylesheet" href="css/dev/navbar.css">
+            <link rel="stylesheet" href="css/ribbon.css">
+        <!-- endbuild -->
 
-</head>
-<body>
+    </head>
+    <body>
 
-    <!--
-        Comments
-        on multiples
-        lines
-    -->
+        <!--
+            Comments
+            on multiples
+            lines
+        -->
 
-    {# Another comment #}
+        {# Another comment #}
 
-    <!-- env:dev -->
-        {% include 'ribbon.html.twig' %}
-    <!-- env:dev:end -->
+        <!-- env:dev -->
+            {% include 'ribbon.html.twig' %}
+        <!-- env:dev:end -->
 
-    {% include 'navbar.html.twig' %}
+        {% include 'navbar.html.twig' %}
 
-    {% block content %}
-    {% endblock %}
+        {% block content %}
+        {% endblock %}
 
-    <!-- build:js js/portfolio.min.js -->
-        <script src="js/main.js"></script>
-        <script src="js/main2.js"></script>
-        <script src="js/dev/dev.js"></script>
-    <!-- endbuild -->
+        <!-- build:js js/portfolio.min.js -->
+            <script src="js/main.js"></script>
+            <script src="js/main2.js"></script>
+            <script src="js/dev/dev.js"></script>
+        <!-- endbuild -->
 
-    <!-- env:dev -->
-        <script src="//localhost:35729/livereload.js"></script>
-    <!-- env:dev:end -->
+        <!-- env:dev -->
+            <script src="//localhost:35729/livereload.js"></script>
+        <!-- env:dev:end -->
 
-</body>
+    </body>
 </html>
