@@ -21,7 +21,8 @@ $translator->addResource('yaml', __DIR__ . '/translations/messages.fr.yml', 'fr'
 
 $twig->addExtension(new \Symfony\Bridge\Twig\Extension\TranslationExtension($translator));
 
-echo $twig->render('base.html.twig', [
+echo $twig->render('homepage.html.twig', [
+    'locale' => $locale,
     'name' => 'florent',
     'name2' => 'tony'
 ]);

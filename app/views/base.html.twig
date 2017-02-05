@@ -1,8 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ locale }}">
 <head>
     <meta charset="UTF-8">
-    <title></title> <!-- here the title of the page -->
+    <meta name="author" content="Florent LE BOULCH" />
+    <meta name="keywords" content="Florent LE BOULCH, portfolio" />
+    <meta name="description" content="{{ 'meta.description'|trans }}">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- unable IE to switch to compatibility style -->
+    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- mobile first -->
+
+    <!-- favicon -->
+    <link rel="icon" type="image/png" href="" />
+
+    <title>{% block page_title %}{% endblock %}</title> <!-- the title of the page -->
 
     <!-- build:css css/portfolio.min.css -->
         <link rel="stylesheet" href="css/1.css">
@@ -10,7 +20,6 @@
         <link rel="stylesheet" href="css/dev/navbar.css">
         <link rel="stylesheet" href="css/ribbon.css">
     <!-- endbuild -->
-
 
 </head>
 <body>
@@ -27,40 +36,10 @@
         {% include 'ribbon.html.twig' %}
     <!-- env:dev:end -->
 
-    <!-- env:dev -->
-    <h1>For devs eyes only</h1>
-    <p>This will be visible in 'dev' environment</p>
-    <!-- env:dev:end -->
+    {% include 'navbar.html.twig' %}
 
-    <!-- env:prod -->
-    <h1>For everyone</h1>
-    <p>This will be visible in 'prod' environment</p>
-    <!-- env:prod:end -->
-
-    <p class="test">Hello, {{ name }} & {{ name2 }} !</p>
-
-    {% include 'components/22.html.twig'
-        with {'description': 'app.description'|trans}
-    %}
-
-    <p>{{ 'title'|trans }}</p>
-    <p>{{ 'app.link'|trans }}</p>
-
-    {% include 'components/picture.html.twig' with {
-        'name': 'istic-env',
-        'alt': 'pictures.home1'|trans
-    } %}
-
-    {% include 'components/picture.html.twig' with {
-        'name': 'hq',
-        'ext': 'png',
-        'alt': 'pictures.home1'|trans
-    } %}
-
-    {% include 'components/picture.html.twig' with {
-        'name': 'unsplash',
-        'alt': 'pictures.home1'|trans
-    } %}
+    {% block content %}
+    {% endblock %}
 
     <!-- build:js js/portfolio.min.js -->
         <script src="js/main.js"></script>
