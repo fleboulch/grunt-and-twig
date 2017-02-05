@@ -97,6 +97,14 @@ module.exports = function(grunt) {
                     dest: '<%= var.pathToDist %><%= var.imgDirectory %>'
                 }]
             },
+            png: {
+                files: [{
+                    expand: true,
+                    cwd: '<%= var.pathToImgTemp %>',
+                    src: ['**/*.png'],
+                    dest: '<%= var.pathToDist %><%= var.imgDirectory %>'
+                }]
+            },
             js: {
                 files: [
                     {expand: true, cwd: '<%= var.appName %>', src: ['<%= var.jsDirectory %>**/*.js'], dest: '<%= var.pathToDist %>'}
@@ -212,7 +220,7 @@ module.exports = function(grunt) {
                 files: [
                     '<%= var.appName %><%= var.imgDirectory %>**/*.png'
                 ],
-                tasks: ['responsive_images', 'pngmin']
+                tasks: ['responsive_images', 'pngmin', 'copy:png']
             },
             compass: {
                 files: [
@@ -258,13 +266,14 @@ module.exports = function(grunt) {
             compile: {
                 options: {
                     ext: '.png',
+                    force: true
                 },
                 files: [
                     {
                         expand: true,
                         src: ['**/*.png'],
                         cwd: '<%= var.pathToImgTemp %>',
-                        dest: '<%= var.pathToDist %><%= var.imgDirectory %>'
+                        dest: '<%= var.pathToImgTemp %>'
                     }
                 ]
             }
@@ -418,8 +427,8 @@ module.exports = function(grunt) {
             'dev_prod_switch',
             'jshint:beforeconcat',
             'responsive_images',
-            'copy',
-            'pngmin' // works great but only for png
+            'pngmin', // works great but only for png
+            'copy'
         ]);
 
         // if '--env=prod' option is passed
