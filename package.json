@@ -17,6 +17,7 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-dev-prod-switch": "^0.1.8",
     "grunt-filerev": "^2.3.1",
+    "grunt-newer": "^1.2.0",
     "grunt-php": "^1.5.1",
     "grunt-pngmin": "^1.2.0",
     "grunt-postcss": "^0.8.0",

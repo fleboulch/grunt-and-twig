@@ -220,13 +220,13 @@ module.exports = function(grunt) {
                 files: [
                     '<%= var.appName %><%= var.imgDirectory %>**/*.png'
                 ],
-                tasks: ['responsive_images', 'pngmin', 'copy:png']
+                tasks: ['responsive_images', 'newer:pngmin', 'copy:png']
             },
             compass: {
                 files: [
                     '<%= var.appName %><%= var.appSass %>**/*.scss'
                 ],
-                tasks: ['compass', 'postcss', 'copy:css']
+                tasks: ['compass', 'newer:postcss', 'copy:css']
             },
             livereload: {
                 options: {
@@ -427,7 +427,7 @@ module.exports = function(grunt) {
             'dev_prod_switch',
             'jshint:beforeconcat',
             'responsive_images',
-            'pngmin', // works great but only for png
+            'newer:pngmin', // works great but only for png
             'copy'
         ]);
 
