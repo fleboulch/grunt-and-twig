@@ -17,7 +17,8 @@ module.exports = function(grunt) {
             },
             build: {
                 files: {
-                    '<%= var.pathToDist %><%= var.jsDirectory %><%= pkg.name %>.min.js': ['<%= concat.js.dest %>']
+                    '<%= var.pathToDist %><%= var.jsDirectory %><%= pkg.name %>.min.js': ['<%= concat.js.dest %>'],
+                    '<%= var.pathToDist %><%= var.jsDirectory %><%= var.vendor %>.min.js': ['<%= concat.vendorJs.dest %>']
                 }
             }
         },
@@ -116,12 +117,16 @@ module.exports = function(grunt) {
             afterconcat: ['<%= var.pathToDist %><%= var.jsDirectory %><%= pkg.name %>.js']
         },
         clean: {
-            dev: ["<%= var.pathToDist %>", "<%= var.pathToTemp %>"],
+            dev: [
+                "<%= var.pathToDist %>*",
+                '!<%= var.pathToDist %>bower_components/**',
+                "<%= var.pathToTemp %>"
+            ],
             prod: [
                 "<%= var.pathToDist %><%= var.jsDirectory %>**/*.js",
-                '!<%= var.pathToDist %><%= var.jsDirectory %>**/<%= pkg.name %>.min.*.js',
+                '!<%= var.pathToDist %><%= var.jsDirectory %>**/*.min.*.js',
                 "<%= var.pathToDist %><%= var.cssDirectory %>**/*.css",
-                '!<%= var.pathToDist %><%= var.cssDirectory %>**/<%= pkg.name %>.min.*.css',
+                '!<%= var.pathToDist %><%= var.cssDirectory %>**/*.min.*.css',
                 '<%= var.pathToTemp %>',
                 '<%= var.pathToImgTemp %>'
             ]
@@ -130,7 +135,7 @@ module.exports = function(grunt) {
             dist: {
                 options: {
                     sassDir: '<%= var.appName %><%= var.appSass %>',
-                    cssDir: '<%= var.pathToTemp %>css/'
+                    cssDir: '<%= var.pathToTemp %><%= var.cssDirectory %>'
                 }
             }
         },
@@ -228,6 +233,12 @@ module.exports = function(grunt) {
                 ],
                 tasks: ['compass', 'newer:postcss', 'copy:css']
             },
+            bower: {
+                files: [
+                    'bower.json'
+                ],
+                tasks: ['wiredep']
+            },
             livereload: {
                 options: {
                     //livereload: '<%= connect.options.livereload %>'
@@ -235,6 +246,25 @@ module.exports = function(grunt) {
                 },
                 files: [
                     '<%= var.pathToDist %>**/*'
+                ]
+            }
+        },
+        wiredep: {
+            app: {
+                // ignore everything before /bower_components
+                ignorePath: new RegExp('.+?(?=/bower_components)'),
+                // Point to the files that should be updated when you run `grunt wiredep`
+                src: [
+                    '<%= var.appName %><%= var.viewsDirectory %>base.html.twig'
+                ],
+                options: {
+                    // See wiredep's configuration documentation for the options you may pass:
+                    // https://github.com/taptapship/wiredep#configuration
+                }
+            },
+            scss: {
+                src: [
+                    '<%= var.appName %><%= var.appSass %><%= var.vendorTmp %>.scss'
                 ]
             }
         },
@@ -247,8 +277,7 @@ module.exports = function(grunt) {
             source: {
                 files: [{
                     src: [
-                        '<%= var.pathToDist %><%= var.jsDirectory %><%= pkg.name %>.min.js',
-                        '<%= var.pathToDist %><%= var.cssDirectory %><%= pkg.name %>.min.css'
+                        '<%= var.pathToDist %>{<%= var.jsDirectory %>,<%= var.cssDirectory %>}*.min.{js,css}'
                     ]
                 }]
             }
@@ -335,13 +364,26 @@ module.exports = function(grunt) {
                 ],
                 dest: '<%= var.pathToDist %><%= var.jsDirectory %><%= pkg.name %>.js'
             },
+            vendorJs: {
+                src: [
+                    '<%= var.pathToDist %>bower_components/jquery/dist/jquery.js',
+                    '<%= var.pathToDist %>bower_components/bootstrap-sass/assets/javascripts/bootstrap.js'
+                ],
+                dest: '<%= var.pathToDist %><%= var.jsDirectory %><%= var.vendor %>.js'
+            },
             css: {
                 src: [
-                    '<%= var.pathToTemp %>css/1.css',
-                    '<%= var.pathToTemp %>css/styles.css',
-                    '<%= var.pathToTemp %>css/dev/navbar.css'
+                    '<%= var.pathToTemp %><%= var.cssDirectory %>1.css',
+                    '<%= var.pathToTemp %><%= var.cssDirectory %>styles.css',
+                    '<%= var.pathToTemp %><%= var.cssDirectory %>dev/navbar.css'
                 ],
                 dest: '<%= var.pathToDist %><%= var.cssDirectory %><%= pkg.name %>.css'
+            },
+            vendorCss: {
+                src: [
+                    '<%= var.pathToTemp %><%= var.cssDirectory %><%= var.vendorTmp %>.css'
+                ],
+                dest: '<%= var.pathToDist %><%= var.cssDirectory %><%= var.vendor %>.css'
             }
         },
         cssmin: {
@@ -349,7 +391,7 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     cwd: '<%= var.pathToDist %><%= var.cssDirectory %>',
-                    src: ['<%= pkg.name %>.css'],
+                    src: ['<%= pkg.name %>.css', '<%= var.vendor %>.css'],
                     dest: '<%= var.pathToDist %><%= var.cssDirectory %>',
                     ext: '.min.css'
                 }]
@@ -422,6 +464,7 @@ module.exports = function(grunt) {
 
         grunt.task.run([
             'clean:dev',
+            'wiredep',
             'compass',
             'postcss',
             'dev_prod_switch',

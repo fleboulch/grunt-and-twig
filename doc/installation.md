@@ -79,6 +79,10 @@ sudo apt-get install graphicsmagick
 ```bash
 # Download node_modules folder
 npm install
+
 # Get twig
 composer install
+
+# Get Bower dependencies
+bower install
 ```

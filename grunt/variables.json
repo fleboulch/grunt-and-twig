@@ -8,5 +8,7 @@
   "imgDirectory": "image/",
   "viewsDirectory": "views/",
   "appSass": "scss/",
-  "cssDirectory": "css/"
+  "cssDirectory": "css/",
+  "vendor": "vendor",
+  "vendorTmp": "vendor_tmp"
 }
