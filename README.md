@@ -1,4 +1,4 @@
-#Grunt-and-twig
+# Grunt-and-twig
 
 Documentation index
 -------------------

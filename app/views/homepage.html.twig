@@ -3,10 +3,18 @@
 {% block page_title %}{{ 'page_title.homepage'|trans }}{% endblock %}
 
 {% block content %}
-    <p class="test">Hello, {{ name }} et {{ name2 }} !</p>
+    <div class="container">
+        <div class="jumbotron">
+            <p class="test ">Hello, {{ name }} et {{ name2 }} !</p>
+            <a href="">{{ 'navbar.home'|trans }}</a>
+            <a href="">{{ 'navbar.section1'|trans }}</a>
+            <br /><br />
+            <span class="glyphicon glyphicon-star"></span>&nbsp;<span>Bootstrap</span>
+            <br /><br />
+            <i class="fa fa-car" aria-hidden="true"></i>&nbsp;Font Awesome
 
-    <a href="">{{ 'navbar.home'|trans }}</a>
-    <a href="">{{ 'navbar.section1'|trans }}</a>
+        </div>
+    </div>
 
     {% include 'components/picture.html.twig' with {
         'name': 'istic-env',

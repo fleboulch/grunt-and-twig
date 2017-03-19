@@ -1,0 +1,25 @@
+{
+  "name": "portfolio",
+  "description": "Florent's portfolio",
+  "main": "",
+  "authors": [
+    "florentL"
+  ],
+  "license": "",
+  "keywords": [
+    "portfolio"
+  ],
+  "homepage": "https://github.com/florentL/Grunt-and-twig",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "test",
+    "tests",
+    "dist/bower_components"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "bootstrap-sass": "^3.3.7",
+    "font-awesome": "fontawesome#^4.7.0"
+  }
+}

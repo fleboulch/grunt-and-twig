@@ -14,6 +14,12 @@
 
         <title>{% block page_title %}{% endblock %}</title> <!-- the title of the page -->
 
+        <!-- build:css css/vendor.min.css -->
+        <!-- bower:css -->
+        <!-- endbower -->
+            <link rel="stylesheet" href="css/vendor_tmp.css">
+        <!-- endbuild -->
+
         <!-- build:css css/portfolio.min.css -->
             <link rel="stylesheet" href="css/1.css">
             <link rel="stylesheet" href="css/styles.css">
@@ -40,6 +46,14 @@
 
         {% block content %}
         {% endblock %}
+
+        <!-- build:js js/vendor.min.js -->
+        <!-- bower:js -->
+        <script src="/bower_components/jquery/dist/jquery.js"></script>
+        <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
+        <!-- endbower -->
+        <!-- endbuild -->
+
 
         <!-- build:js js/portfolio.min.js -->
             <script src="js/main.js"></script>

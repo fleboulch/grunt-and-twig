@@ -7,5 +7,6 @@ grunt -h
 grunt  
   
 # Deploy the app in prod
+bower install # download bower_components
 grunt build --env=prod
 ```
