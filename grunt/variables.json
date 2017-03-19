@@ -10,5 +10,6 @@
   "appSass": "scss/",
   "cssDirectory": "css/",
   "vendor": "vendor",
-  "vendorTmp": "vendor_tmp"
+  "vendorTmp": "vendor_tmp",
+  "portNumber": 9001
 }
