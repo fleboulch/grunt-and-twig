@@ -42,7 +42,7 @@ module.exports = function(grunt) {
         php: {
             dist: {
                 options: {
-                    port: 9001,
+                    port: "<%= var.portNumber %>",
                     //keepalive: true,
                     open: true,
                     base: 'dist'
@@ -151,7 +151,7 @@ module.exports = function(grunt) {
         },
         connect: {
             options: {
-                port: 9001, // configure your port here
+                port: "<%= var.portNumber %>", // configure your port here
                 hostname: 'localhost',
                 //base: 'dist', // configure your site distribution path here
                 //open: true,
