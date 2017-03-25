@@ -377,7 +377,8 @@ module.exports = function(grunt) {
                 src: [
                     '<%= var.pathToTemp %><%= var.cssDirectory %>1.css',
                     '<%= var.pathToTemp %><%= var.cssDirectory %>styles.css',
-                    '<%= var.pathToTemp %><%= var.cssDirectory %>dev/navbar.css'
+                    '<%= var.pathToTemp %><%= var.cssDirectory %>dev/navbar.css',
+                    '<%= var.pathToTemp %><%= var.cssDirectory %>homepage.css'
                 ],
                 dest: '<%= var.pathToDist %><%= var.cssDirectory %><%= pkg.name %>.css'
             },
