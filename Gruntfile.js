@@ -1,7 +1,9 @@
 module.exports = function(grunt) {
 
+    require('time-grunt')(grunt);
+
     require('jit-grunt')(grunt, {
-        useminPrepare: 'grunt-usemin',
+        useminPrepare: 'grunt-usemin'
     });
 
     // new grunt-contrib-connect need serve-static
