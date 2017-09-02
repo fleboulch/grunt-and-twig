@@ -79,7 +79,7 @@ module.exports = function(grunt) {
             },
             php: {
                 files: [
-                    {expand: true, cwd: '<%= var.appName %>', src: ['*.php'], dest: '<%= var.pathToDist %>'}
+                    {expand: true, cwd: '<%= var.appName %>', src: ['**/*.php'], dest: '<%= var.pathToDist %>'}
                 ]
             },
             translations: {
@@ -201,7 +201,7 @@ module.exports = function(grunt) {
             },
             php: {
                 files: [
-                    '<%= var.appName %>*.php'
+                    '<%= var.appName %>**/*.php'
                 ],
                 tasks: ['copy:php']
             },
