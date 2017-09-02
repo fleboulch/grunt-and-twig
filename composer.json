@@ -4,6 +4,9 @@
         "symfony/translation": "^3.1",
         "symfony/twig-bridge": "^3.1",
         "symfony/config": "^3.1",
-        "symfony/yaml": "^3.1"
+        "symfony/yaml": "^3.1",
+        "symfony/routing": "^3.2",
+        "symfony/http-foundation": "^3.2",
+        "symfony/http-kernel": "^3.2"
     }
 }

@@ -5,6 +5,22 @@ require_once(__DIR__."/../vendor/autoload.php");
 $loader = new \Twig_Loader_Filesystem(__DIR__.'/views');
 $twig = new \Twig_Environment($loader);
 
+//$sfLoader = require (__DIR__."/../vendor/autoload.php");
+//$sfLoader->register();
+//
+//$loader = require '../vendor/autoload.php';
+//$loader->register();
+//
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+$response = new Response();
+
+require 'lib/Framework/Core.php';
+
+$request = Request::createFromGlobals();
+
+// Our framework is now handling itself the request
+$app = new Framework\Core();
 
 // tuto for i18n: http://yutaf.github.io/php-i18n-with-twig-and-symfony-translation-component-outside-of-symfony-framework/
 
@@ -26,3 +42,18 @@ echo $twig->render('homepage.html.twig', [
     'name' => 'florent',
     'name2' => 'tony'
 ]);
+
+$app->map('/hello-{toto}', function ($toto) {
+    return new Response('Hello '.$toto);
+});
+
+$app->map('/', function () {
+    return new Response('This is the home page');
+});
+
+$app->map('/about', function () {
+    return new Response('This is the about page');
+});
+
+$response = $app->handle($request);
+$response->send();
